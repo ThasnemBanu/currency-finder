@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Flex, Select } from "antd";
+import { Select, Row, Col } from "antd";
 import { countries } from "./countries";
 
 export default function CurrencyFinderForm() {
-  const [country, setCountry] = useState("Select Country");
-  const [currency, setCurrency] = useState("Currency");
+  const [currency, setCurrency] = useState("");
 
   const handleCountryChange = async (value) => {
     try {
-      setCountry(value);
       fetch(process.env.NEXT_PUBLIC_DATASTORY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,25 +36,32 @@ export default function CurrencyFinderForm() {
     }
   };
 
+  const filterOption = (input, option) =>
+  (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
   return (
     <div>
-      <Flex justify="left" gap="large" align="center">
-        <Flex vertical>
-          <h3 style={{ width: 200 }}>Country : </h3>
+      <Row gutter={40} justify="left" align="center" span={12} xs={{span: 24}} >
+        <Col>
+          <h3 style={{ width: 200, textAlign: "left" }}>Country : </h3>
           <Select
-            defaultValue={country}
-            style={{ width: 200 }}
+            showSearch
+            placeholder="Select Country"
+            optionFilterProp="children"
             onChange={handleCountryChange}
+            filterOption={filterOption}
             options={countries}
-          />
-        </Flex>
-        <Flex vertical>
-          <h3 style={{ width: 200 }}>Currency : </h3>
-          <span style={{ border: "solid 3px black", padding: "4px" }}>
+            style={{ width: 200 }}
+           />
+        </Col>
+        
+        <Col>
+          <h3 style={{ width: 200, textAlign: "left" }}>Currency : </h3>
+          <span>
             {currency}
           </span>
-        </Flex>
-      </Flex>
+        </Col>
+      </Row>    
     </div>
   );
 }

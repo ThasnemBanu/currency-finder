@@ -1,0 +1,15 @@
+body {
+  display: flex;
+  background-color: white;
+  background-image: url("../public/currency-img.jpg");
+  justify-content: center;
+  align-items: center;
+}
+main{
+  
+  background-color: white;
+  padding: 5px;
+  width: 30%;
+  justify-content: center;
+  border-radius: 10px;
+}
